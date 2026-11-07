@@ -44,6 +44,16 @@ The tool and all of its output are in English. The manual screen reader protocol
 
 ## Install
 
+### npm (all platforms)
+
+```sh
+npm install --global @eleven-hits/a11ylens
+a11ylens --version
+a11ylens doctor
+```
+
+The scoped package is `@eleven-hits/a11ylens`; the command is `a11ylens`. Install a supported Chromium browser separately for rendered scans.
+
 ### Windows
 
 ```powershell
