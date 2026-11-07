@@ -29,6 +29,24 @@ async function fixture(t, body) {
 const ROOT = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 const enabled = process.env.A11Y_TEST_RENDER === '1' && Boolean(findBrowser());
 
+test('README audit loop confirms the missing button name in Chromium and clears the fix', { skip: !enabled, timeout: 120000 }, async () => {
+  for (const state of ['before', 'after']) {
+    const root = path.join(ROOT, 'examples', 'audit-loop', state);
+    const result = await runDynamicScan({ root, config: { ...defaultConfig(), crawl: 1, wait: 0 } });
+    assert.deepEqual(result.errors, []);
+    assert.equal(result.pages.length, 1);
+    if (state === 'before') {
+      const finding = result.findings.find((entry) => entry.ruleId === 'axe/button-name');
+      assert.ok(finding);
+      assert.equal(finding.file, 'index.html');
+      assert.equal(finding.line, 0);
+      assert.equal(finding.selector, '#download-receipt');
+    } else {
+      assert.deepEqual(result.findings, []);
+    }
+  }
+});
+
 test('rendered Chrome scan sees axe, the accessibility tree and keyboard focus', { skip: !enabled, timeout: 180000 }, async () => {
   const root = path.join(ROOT, 'examples', 'broken-site');
   const config = { ...defaultConfig(), quiet: true, crawl: 1, maxDepth: 0, wait: 300, timeout: 60000 };

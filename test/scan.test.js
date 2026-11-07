@@ -36,6 +36,22 @@ test('clean fixture has no findings', async () => {
   assert.equal(report.summary.score, 100);
 });
 
+test('README audit loop reports the exact source location and clears the corrected button', async () => {
+  const { report: before } = await scanFixture('audit-loop/before');
+  assert.deepEqual(before.errors, []);
+  assert.equal(before.findings.length, 1);
+  const finding = before.findings[0];
+  assert.equal(finding.ruleId, 'button-name');
+  assert.equal(finding.file, 'index.html');
+  assert.equal(finding.line, 12);
+  assert.equal(finding.column, 5);
+  assert.equal(finding.selector, 'button#download-receipt');
+  assert.equal(finding.message, 'This button has no accessible name. Add text or aria-label.');
+  const { report: after } = await scanFixture('audit-loop/after');
+  assert.deepEqual(after.errors, []);
+  assert.deepEqual(after.findings, []);
+});
+
 test('broken fixture triggers the expected static rules', async () => {
   const { report } = await scanFixture('broken-site');
   const ids = new Set(report.findings.map((finding) => finding.ruleId));

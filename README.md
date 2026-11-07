@@ -7,7 +7,7 @@ Findings include a likely screen reader impact, remediation guidance and a manua
 Illustrative terminal excerpt (paths and counts depend on the target):
 
 ```text
-A11yLens 1.0.0  Accessibility and screen reader audit
+A11yLens 1.0.1  Accessibility and screen reader audit
 Target: C:\work\shop\dist
 Files: 24 HTML · 31 source · 6 CSS
 
@@ -121,6 +121,66 @@ a11ylens ./dist --render --fail-on error --min-score 85
 # Screen reader test plan for the findings
 a11ylens manual ./dist --findings
 ```
+
+## A real audit, fix and re-run
+
+The repository and npm package include [before](examples/audit-loop/before/index.html) and [after](examples/audit-loop/after/index.html) versions of an icon button. This is a focused accessibility fixture, not a receipt download implementation. The SVG is decorative, so the original button has no accessible name:
+
+```html
+<button id="download-receipt" type="button">
+```
+
+From a repository checkout, run:
+
+```sh
+node bin/a11ylens.js examples/audit-loop/before --render --wait 0 --format json --output before.json
+```
+
+This exits with code `1`. The following fields are an excerpt of the actual JSON findings from Chrome and axe-core 4.14.0; unrelated fields are omitted:
+
+```json
+[
+  {
+    "ruleId": "axe/button-name",
+    "file": "index.html",
+    "line": 0,
+    "selector": "#download-receipt",
+    "message": "Buttons must have discernible text",
+    "engine": "axe"
+  },
+  {
+    "ruleId": "button-name",
+    "file": "index.html",
+    "line": 12,
+    "column": 5,
+    "selector": "button#download-receipt",
+    "message": "This button has no accessible name. Add text or aria-label.",
+    "engine": "static"
+  }
+]
+```
+
+These are two findings for one barrier. The static result locates the HTML source; the rendered axe result confirms the missing name in the loaded page. The scan also inspects Chromium's accessibility tree, but its additional unnamed-widget rule covers selected roles and does not emit a separate button finding here. Rendered findings do not automatically map to framework component source files. Use their selector and snippet to locate the responsible component; component source checks separately report their own file and line.
+
+An AI coding assistant can help with the fix. For example, give it the report excerpt and button markup with this instruction:
+
+> Give this icon button the accessible name "Download receipt". Keep the SVG decorative and preserve the existing behaviour. Explain the proposed change so I can review it.
+
+The committed correction changes only the opening tag:
+
+```html
+<button id="download-receipt" type="button" aria-label="Download receipt">
+```
+
+Review the change, then run the same checks on the corrected file:
+
+```sh
+node bin/a11ylens.js examples/audit-loop/after --render --wait 0 --format json --output after.json
+```
+
+The verified result is exit code `0`, `"findings": []` and `"errors": []`. This establishes that the missing-name findings are resolved in this fixture; it does not establish complete accessibility. In the real application, Tab to the button with your screen reader, confirm that its purpose is announced, and test its action with Enter and Space. An AI-generated patch needs the same review and testing as any other patch. A11yLens does not call an AI service or apply fixes itself.
+
+Browser integration tests verify that the original has an `axe/button-name` finding and that the corrected page has no automated findings. Static tests verify the reported source location. Browser-dependent wording or additional findings may change with browser and dependency versions.
 
 ## Commands
 
@@ -275,6 +335,8 @@ Automated checks cannot answer: "Does this announcement make sense?" `a11ylens m
 Read [docs/SCREEN-READERS.md](docs/SCREEN-READERS.md) for pairings, commands and what to listen for.
 
 ## Honest limits
+
+See [Known false-positive risks and verification steps](docs/LIMITATIONS.md) for a rule-by-rule review guide, reporting instructions and suppression tradeoffs. Rates have not been measured; severity is not a confidence percentage. In particular, focus, reading-order, live-region and component syntax heuristics require human review.
 
 - Static component checks inspect source syntax, not component output or runtime prop values. Vue/Svelte/Astro template scanning is heuristic. Rendered checks inspect only the page state that loads without interaction. The temporary browser profile has no saved login; authentication flows are not automated.
 - The CSS cascade is approximated. Gradients, images, opacity, custom properties set at runtime and media queries can change contrast and focus styles. Treat `css-contrast` and `css-focus-outline` as "verify in the browser".

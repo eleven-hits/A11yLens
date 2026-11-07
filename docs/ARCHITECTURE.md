@@ -114,13 +114,15 @@ This is enough for warning-level checks. It will miss gradients, background imag
 
 The DOM is not what a screen reader sees. Browsers compute an accessibility tree with roles, names, states, ignored nodes and reading order. Chrome exposes it through `Accessibility.getFullAXTree`, which gives A11yLens:
 
-- the name a screen reader will actually announce;
+- the computed name Chromium exposes to assistive technology; actual speech depends on the screen reader and its settings;
 - roles that differ from the markup (for example an invalid role falling back to generic);
 - nodes that are ignored because of `aria-hidden` or CSS;
 - heading levels and landmarks in rendered order;
 - focusable state.
 
 This is why the rendered scan can report "the rendered progressbar has no accessible name" even when the source looks plausible.
+
+The runtime node is not automatically mapped to a framework component or source map. Source findings and rendered findings remain separate and may describe the same barrier. See [known review risks](LIMITATIONS.md) for false-positive scenarios and verification steps.
 
 ## Keyboard walk
 

@@ -101,6 +101,6 @@ Open a pull request against `main` and use the pull request template. Describe t
 
 For an accessibility rule, include its specification reference, failing and passing examples, and limitations. For a bug fix, include a regression test that would have failed before the change. Be explicit about tests you could not run.
 
-Keep the README accurate when behavior, requirements, installation, configuration or supported checks change. Do not claim complete WCAG coverage or identical speech across screen reader/browser combinations.
+Keep the README accurate when behavior, requirements, installation, configuration or supported checks change. Update [known false-positive risks](docs/LIMITATIONS.md) when a check's limitations change. Preserve the reproducible README audit loop under `examples/audit-loop` and its static and browser assertions. Do not claim complete WCAG coverage or identical speech across screen reader/browser combinations.
 
 Review feedback may request a narrower change, more evidence or additional edge cases. Respond to the feedback and keep the branch focused until the change is ready to merge.

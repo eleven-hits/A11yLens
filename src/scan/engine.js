@@ -23,7 +23,7 @@ import { isRuleIgnored, severityOverride } from '../config.js';
 import { clamp, countBy, isSubPath, normalizeWhitespace, relativeTo, sha1, toPosix } from '../util.js';
 import { isLocalHref, readTextFile } from './walker.js';
 
-export const TOOL_VERSION = '1.0.0';
+export const TOOL_VERSION = '1.0.1';
 
 export async function scanStatic(root, config, options = {}) {
   const started = Date.now();
