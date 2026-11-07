@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>Northwind Shop</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <a href="/" class="logo"><img src="logo.png" alt="Northwind Shop logo"></a>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="/contact">Click here</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="content">
+    <h1>Welcome to Northwind</h1>
+    <p class="intro">We sell outdoor gear for every season. Our team has been building equipment since 1994.</p>
+
+    <h3>This week's offers</h3>
+    <div class="cards">
+      <div class="card">
+        <img src="tent.jpg" alt="tent.jpg">
+        <h4>Basecamp tent</h4>
+        <p>Sleeps two, weighs 2.1 kg.</p>
+        <a href="/tent">Read more</a>
+      </div>
+      <div class="card">
+        <img src="jacket.jpg" alt="image of a rain jacket">
+        <h4>Storm jacket</h4>
+        <p>Waterproof and breathable.</p>
+        <a href="/jacket" target="_blank">Read more</a>
+      </div>
+      <div class="card">
+        <img src="boots.jpg">
+        <h4>Trail boots</h4>
+        <p>Grippy on wet rock.</p>
+        <a href="#">Details</a>
+      </div>
+    </div>
+
+    <h2>Newsletter</h2>
+    <form action="/subscribe" method="post">
+      <input type="email" name="email" placeholder="Email address">
+      <input type="text" id="fullname" name="fullname">
+      <label for="nick-name">Nickname</label>
+      <input type="text" id="nickname" name="nickname" autocomplete="off">
+      <label>Country <input type="text" name="country"></label>
+      <select name="topic">
+        <option>News</option>
+        <option>Offers</option>
+      </select>
+      <fieldset>
+        <input type="checkbox" name="interest" value="hiking"> Hiking
+        <input type="checkbox" name="interest" value="climbing"> Climbing
+      </fieldset>
+      <button type="submit" class="icon-button">
+        <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 8h12M8 2v12"></path></svg>
+      </button>
+      <div class="fake-button" onclick="subscribe()">Subscribe now</div>
+      <progress value="20" max="100"></progress>
+      <div role="btn" tabindex="3">Fake role</div>
+      <div role="link" tabindex="0"></div>
+      <div role="img" aria-label=""></div>
+      <div role="dialog"><p>Cookie settings</p></div>
+      <div id="dupe"></div>
+      <span id="dupe">Duplicate id</span>
+      <div aria-hidden="true"><button type="button">Close banner</button></div>
+      <button type="button" aria-label="">Unnamed by empty label</button>
+      <button type="button" aria-labelledby="missing-heading">Help</button>
+      <h2></h2>
+      <ul>
+        <div>Not a list item</div>
+      </ul>
+      <iframe src="https://example.com/widget"></iframe>
+      <video src="promo.mp4" autoplay></video>
+      <audio src="podcast.mp3" controls></audio>
+      <marquee>Sale ends Friday</marquee>
+      <table>
+        <tr><td>Plan</td><td>Price</td></tr>
+        <tr><td>Basic</td><td>$9</td></tr>
+        <tr><td>Pro</td><td>$19</td></tr>
+      </table>
+      <a href="#nowhere">Jump to missing section</a>
+      <a href="/products">Read more</a>
+      <a href="/support">Read more</a>
+      <div class="low-contrast">This text is too light to read comfortably.</div>
+      <div class="order-demo"><span>First in DOM</span><span>Second in DOM</span></div>
+    </form>
+  </div>
+
+  <footer>
+    <p>&copy; Northwind</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,45 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, sans-serif;
+  color: #1a1a1a;
+  background: #ffffff;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #4f46e5;
+  outline-offset: 2px;
+}
+
+nav a {
+  display: inline-block;
+  padding: 0.35rem 0.5rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: #ffffff;
+  color: #1a1a1a;
+  padding: 0.5rem 1rem;
+}
+
+.skip-link:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+  outline: 3px solid #4f46e5;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #767676;
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+}

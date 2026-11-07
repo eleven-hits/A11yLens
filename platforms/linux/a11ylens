@@ -1,0 +1,25 @@
+#!/bin/sh
+set -eu
+
+SOURCE=$0
+LINK_COUNT=0
+while [ -L "$SOURCE" ]; do
+  LINK_COUNT=$((LINK_COUNT + 1))
+  if [ "$LINK_COUNT" -gt 40 ]; then
+    echo "A11yLens launcher has too many symbolic links." >&2
+    exit 2
+  fi
+  SOURCE_DIR=$(CDPATH= cd -P -- "$(dirname -- "$SOURCE")" && pwd)
+  SOURCE=$(readlink "$SOURCE")
+  case "$SOURCE" in
+    /*) ;;
+    *) SOURCE=$SOURCE_DIR/$SOURCE ;;
+  esac
+done
+ROOT=$(CDPATH= cd -P -- "$(dirname -- "$SOURCE")/../.." && pwd)
+if [ ! -d "$ROOT/node_modules/axe-core" ]; then
+  echo "A11yLens dependencies are missing. Run platforms/linux/install.sh first." >&2
+  exit 2
+fi
+
+exec node "$ROOT/bin/a11ylens.js" "$@"

@@ -1,0 +1,44 @@
+name: Accessibility audit
+
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  a11ylens:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the site
+        run: npm run build --if-present
+
+      - name: Run A11yLens
+        run: |
+          npx --no-install a11ylens ./dist \
+            --render \
+            --crawl 10 \
+            --format sarif \
+            --output a11ylens.sarif \
+            --fail-on error
+
+      - name: Upload SARIF
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: a11ylens.sarif
+          category: a11ylens

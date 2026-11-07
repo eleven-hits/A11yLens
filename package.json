@@ -1,0 +1,51 @@
+{
+  "name": "a11ylens",
+  "version": "1.0.0",
+  "description": "Cross-platform accessibility and screen reader audit CLI for web projects",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eleven-hits/A11yLens.git"
+  },
+  "homepage": "https://github.com/eleven-hits/A11yLens#readme",
+  "bugs": {
+    "url": "https://github.com/eleven-hits/A11yLens/issues"
+  },
+  "bin": {
+    "a11ylens": "bin/a11ylens.js"
+  },
+  "engines": {
+    "node": ">=20.10"
+  },
+  "scripts": {
+    "test": "node --test test/core.test.js test/scan.test.js test/report.test.js test/source.test.js test/regression.test.js test/validation.test.js test/dynamic.test.js",
+    "test:render": "node --test test/dynamic.test.js",
+    "docs:rules": "node scripts/generate-rules-doc.js",
+    "demo": "node bin/a11ylens.js examples/broken-site",
+    "demo:render": "node bin/a11ylens.js examples/broken-site --render --crawl 4",
+    "rules": "node bin/a11ylens.js rules"
+  },
+  "files": [
+    "bin",
+    "src",
+    "platforms",
+    "docs",
+    "README.md",
+    "CONTRIBUTING.md"
+  ],
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "wcag",
+    "screen-reader",
+    "cli",
+    "audit",
+    "axe-core"
+  ],
+  "dependencies": {
+    "@babel/parser": "^7.29.13",
+    "axe-core": "^4.14.0",
+    "parse5": "^8.0.0"
+  }
+}

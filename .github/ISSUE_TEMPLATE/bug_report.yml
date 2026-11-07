@@ -1,0 +1,32 @@
+name: Bug report or false positive
+description: Report incorrect scanner behavior, a missed barrier or a false positive.
+title: "[Bug] "
+body:
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include A11yLens, Node.js and operating system versions. Include browser and screen reader versions when relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Provide the exact command, relevant configuration and the smallest HTML, CSS or component case that reproduces the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: Explain the expected finding, absence of a finding, report or exit code. Link a specification when useful.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include the relevant output, rule id, exit code and any error message.
+    validations:
+      required: true

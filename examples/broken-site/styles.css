@@ -1,0 +1,51 @@
+html {
+  font-family: system-ui, sans-serif;
+  color: #222;
+  background: #ffffff;
+}
+
+*:focus {
+  outline: none;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.low-contrast {
+  color: #b9b9b9;
+  background: #ffffff;
+}
+
+.order-demo {
+  display: flex;
+}
+
+.order-demo span:first-child {
+  order: 2;
+}
+
+.icon-button {
+  border: 0;
+  background: #eee;
+}
+
+.fake-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: #0057b8;
+  color: #ffffff;
+}
+
+@media (max-width: 600px) {
+  .cards {
+    display: grid;
+    gap: 0.5rem;
+  }
+}
